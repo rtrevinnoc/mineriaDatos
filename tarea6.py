@@ -35,13 +35,13 @@ df = df.assign(location=df['location'].astype('category').cat.codes)
 df = df.fillna(0)
 
 print(df)
-scatter_group_by("kmeansTruthGroups.png", df, "applies", "views", "formatted_work_type")
+scatter_group_by("kmeansTruthGroups.png", df, "location", "max_salary", "formatted_work_type")
 
-X = df[['applies', 'views']]
+X = df[['location', 'max_salary']]
 Y = df['formatted_work_type']
 MinMaxScaler = MinMaxScaler()
 X_minmax = MinMaxScaler.fit_transform(X)
-data = pd.DataFrame(X_minmax,columns=['applies', 'views'])
+data = pd.DataFrame(X_minmax,columns=['location', 'max_salary'])
 
 X_train, X_test, y_train, y_test = train_test_split(data, Y,test_size=0.2, random_state = 1)
 
@@ -52,5 +52,5 @@ X_test_norm = normalize(X_test)
 kmeans = KMeans(n_clusters = 6, random_state = 0, n_init='auto')
 kmeans.fit(X_train_norm)
 
-sns.scatterplot(data = X_train, x = 'applies', y = 'views', hue = kmeans.labels_)
+sns.scatterplot(data = X_train, x = 'location', y = 'max_salary', hue = kmeans.labels_)
 plt.show()

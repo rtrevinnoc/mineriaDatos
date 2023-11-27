@@ -13,6 +13,9 @@ df['expiry'] = df['expiry'].astype('datetime64[ms]')
 # Convertir la columna de remote allowed de enteros a booleanos
 df['remote_allowed'] = df['remote_allowed'].apply(lambda val: True if (val == 1) else False)
 
+# Dejar solo estado en location
+df['location'] = df['location'].apply(lambda val: val.split(",")[-1].strip())
+
 print(df)
 print(df.shape[0])
 

@@ -25,17 +25,19 @@ def scatter_group_by(file_path, df, x_column, y_column, label_column):
     ax.legend()
     ax.set_ylabel("Salario máximo")
     ax.set_xlabel("Ubicación")
+    plt.xticks(rotation='vertical')
     plt.savefig(file_path)
     plt.show()
 
 df = pd.read_csv('clean_dataset.csv')
 
 df = df.assign(title=df['title'].astype('category').cat.codes)
-df = df.assign(location=df['location'].astype('category').cat.codes)
 df = df.fillna(0)
 
 print(df)
 scatter_group_by("knnGroups.png", df, "location", "max_salary", "formatted_work_type")
+
+df = df.assign(location=df['location'].astype('category').cat.codes)
 
 X = df[['location', 'max_salary']]
 Y = df['formatted_work_type']
